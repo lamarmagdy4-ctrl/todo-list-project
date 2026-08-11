@@ -8,7 +8,6 @@ from starlette.middleware.sessions import SessionMiddleware
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-# FastAPI application setup
 
 app = FastAPI()
 
@@ -26,7 +25,6 @@ app.mount(
 templates = Jinja2Templates(directory="templates")
 
 
-# Database setup
 
 def create_database():
     connection = sqlite3.connect("todo.db")
@@ -53,7 +51,6 @@ def create_database():
 create_database()
 
 
-# Create user
 
 def create_user():
     connection = sqlite3.connect("todo.db")
@@ -135,7 +132,6 @@ def tasks_page(request: Request):
     )
 
 
-# Add task
 
 @app.post("/home")
 def add_task(title: str = Form(...)):
@@ -152,7 +148,6 @@ def add_task(title: str = Form(...)):
     return RedirectResponse(url="/home", status_code=303)
 
 
-# Delete task
 
 @app.get("/delete/{task_id}")
 def delete_task(task_id: int):
@@ -169,7 +164,6 @@ def delete_task(task_id: int):
     return RedirectResponse(url="/home", status_code=303)
 
 
-# Profile page
 
 @app.get("/profile")
 def profile_page(request: Request):
@@ -183,7 +177,6 @@ def profile_page(request: Request):
     )
 
 
-# Logout
 
 @app.get("/logout")
 def logout(request: Request):
