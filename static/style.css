@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: black; 
+    background-color: black;
     color: white;
     margin: 0;
     padding: 40px;
@@ -9,11 +9,16 @@ body {
 
 h1 {
     color: pink;
-} 
+}
 
 
 h2 {
     color: palevioletred;
+}
+
+
+p {
+    font-size: 18px;
 }
 
 
@@ -26,7 +31,7 @@ input {
 
 
 button {
-    background-color: pink; 
+    background-color: pink;
     color: black;
     padding: 10px 15px;
     border: none;
@@ -36,17 +41,12 @@ button {
 
 
 button:hover {
-    background-color: palevioletred
+    background-color: palevioletred;
 }
 
 
 a {
-    color: palevioletred
-}
-
-
-p {
-    font-size: 18px;
+    color: palevioletred;
 }
 
 
@@ -60,7 +60,7 @@ p {
 }
 
 
-.navigation { 
+.navigation {
     position: fixed;
     bottom: 40px;
     left: 45px;
@@ -75,4 +75,3 @@ p {
 .error {
     color: red;
 }
-

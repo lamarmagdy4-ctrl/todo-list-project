@@ -1,16 +1,32 @@
 import sqlite3
-from fastapi import FastAPI, Request, Form 
+
+from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
 from werkzeug.security import generate_password_hash, check_password_hash
-from fastapi.responses import RedirectResponse 
-from fastapi.staticfiles import StaticFiles 
-from starlette.middleware.sessions import SessionMiddleware 
+
+
+# FastAPI application setup
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="simple-secret-key")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="simple-secret-key"
+)
+
+app.mount(
+    "/static",
+    StaticFiles(directory="static"),
+    name="static"
+)
+
 templates = Jinja2Templates(directory="templates")
 
+
+# Database setup
 
 def create_database():
     connection = sqlite3.connect("todo.db")
@@ -33,8 +49,11 @@ def create_database():
     connection.commit()
     connection.close()
 
+
 create_database()
 
+
+# Create user
 
 def create_user():
     connection = sqlite3.connect("todo.db")
@@ -49,8 +68,11 @@ def create_user():
     connection.commit()
     connection.close()
 
+
 create_user()
 
+
+# Login page
 
 @app.get("/")
 def login_page(request: Request):
@@ -60,15 +82,16 @@ def login_page(request: Request):
     )
 
 
+# Login function
+
 @app.post("/")
 def login_user(
     request: Request,
-    username: str = Form (...),
-    password: str = Form (...)
+    username: str = Form(...),
+    password: str = Form(...)
 ):
-
     connection = sqlite3.connect("todo.db")
-    connection.row_factory = sqlite3.Row 
+    connection.row_factory = sqlite3.Row
 
     user = connection.execute(
         "SELECT * FROM users WHERE username = ?",
@@ -80,7 +103,7 @@ def login_user(
     if user and check_password_hash(user["password"], password):
         request.session["user"] = username
         return RedirectResponse(url="/home", status_code=303)
-    
+
     return templates.TemplateResponse(
         request=request,
         name="login.html",
@@ -88,13 +111,16 @@ def login_user(
     )
 
 
+# Home page
+
 @app.get("/home")
 def tasks_page(request: Request):
+
     if "user" not in request.session:
         return RedirectResponse(url="/", status_code=303)
 
     connection = sqlite3.connect("todo.db")
-    connection.row_factory =sqlite3.Row
+    connection.row_factory = sqlite3.Row
 
     tasks = connection.execute(
         "SELECT * FROM tasks"
@@ -109,9 +135,12 @@ def tasks_page(request: Request):
     )
 
 
+# Add task
+
 @app.post("/home")
 def add_task(title: str = Form(...)):
     connection = sqlite3.connect("todo.db")
+
     connection.execute(
         "INSERT INTO tasks (title) VALUES (?)",
         (title,)
@@ -123,12 +152,14 @@ def add_task(title: str = Form(...)):
     return RedirectResponse(url="/home", status_code=303)
 
 
+# Delete task
+
 @app.get("/delete/{task_id}")
 def delete_task(task_id: int):
     connection = sqlite3.connect("todo.db")
 
     connection.execute(
-        "DELETE FROM tasks WHERE id= ?",
+        "DELETE FROM tasks WHERE id = ?",
         (task_id,)
     )
 
@@ -138,8 +169,11 @@ def delete_task(task_id: int):
     return RedirectResponse(url="/home", status_code=303)
 
 
+# Profile page
+
 @app.get("/profile")
-def profile_page_(request: Request):
+def profile_page(request: Request):
+
     if "user" not in request.session:
         return RedirectResponse(url="/", status_code=303)
 
@@ -149,7 +183,13 @@ def profile_page_(request: Request):
     )
 
 
+# Logout
+
 @app.get("/logout")
 def logout(request: Request):
     request.session.clear()
-    return RedirectResponse(url="/", status_code=303)
+
+    return RedirectResponse(
+        url="/",
+        status_code=303
+    )
