@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>To-Do List</h1>
+
+    <h2>Login</h2>
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+
+        <br><br>
+
+        <input type="password" name="password" placeholder="Password" required>
+
+        <br><br>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

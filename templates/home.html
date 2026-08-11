@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tasks</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>My Tasks</h1>
+
+    <form method="POST">
+        <input type="text" name="title" placeholder="Enter a task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <br>
+
+{% for task in tasks %}    
+    <p class="task">
+        {{ task["title"] }}
+        <a href="/delete/{{ task ['id'] }}" onclick="return confirmDelete()">Delete</a>
+    </p>    
+{% endfor %}
+
+<br><br>
+
+<div class="navigation">
+    <a href="/home">Home</a>
+    <a class="profile-link" href="/profile">Profile</a>
+</div>
+
+<script src="/static/script.js"></script>
+
+
+</body>
+
+</html>

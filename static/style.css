@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: black; 
+    color: white;
+    margin: 0;
+    padding: 40px;
+}
+
+
+h1 {
+    color: pink;
+} 
+
+
+h2 {
+    color: palevioletred;
+}
+
+
+input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+
+button {
+    background-color: pink; 
+    color: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+button:hover {
+    background-color: palevioletred
+}
+
+
+a {
+    color: palevioletred
+}
+
+
+p {
+    font-size: 18px;
+}
+
+
+.task {
+    width: 340px;
+}
+
+
+.task a {
+    float: right;
+}
+
+
+.navigation { 
+    position: fixed;
+    bottom: 40px;
+    left: 45px;
+}
+
+
+.profile-link {
+    margin-left: 230px;
+}
+
+
+.error {
+    color: red;
+}
+
